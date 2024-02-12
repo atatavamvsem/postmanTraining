@@ -1,0 +1,357 @@
+{
+	"info": {
+		"_postman_id": "a6e89cbd-b5ad-4022-8e3a-a05281428fcb",
+		"name": "Pet Store",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "New Requests",
+			"item": [
+				{
+					"name": "Pet",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "257886e7-588e-4734-89d5-37baffe67272",
+								"exec": [
+									"const postPetRequest = {",
+									"    url: pm.environment.get(\"url\") + '/pet',",
+									"    method: 'POST',",
+									"    header: {",
+									"        'Content-Type': 'application/json'",
+									"    },",
+									"    body: JSON.stringify({",
+									"        \"id\": 0,",
+									"        \"category\": {",
+									"            \"id\": 0,",
+									"            \"name\": \"kitty\"",
+									"        },",
+									"        \"name\": \"Archi\",",
+									"        \"photoUrls\": [",
+									"            \"string\"",
+									"        ],",
+									"        \"tags\": [",
+									"            {",
+									"            \"id\": 0,",
+									"            \"name\": \"string\"",
+									"            }",
+									"        ],",
+									"        \"status\": \"available\"",
+									"    }),",
+									"};",
+									"",
+									"pm.sendRequest(postPetRequest, function (err, resp) {",
+									"    console.log(resp.text());",
+									"    let responseText = resp.text().replace(/([^\"\\w-])([-0-9.]{8,100})([^\"\\w-])/g, '$1\\\"$2\\\"$3');",
+									"    let jsonData = JSON.parse(responseText);",
+									"    let id = jsonData.id.replace('\"', '');",
+									"    console.log(\"Pet id is \" + id);",
+									"    pm.collectionVariables.set(\"id\", id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "752a34da-66d3-45be-8537-18ff2efeef0c",
+								"exec": [
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(pm.collectionVariables.get('id'));",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"        pm.response.to.have.status(200);",
+									"});",
+									"",
+									"//changes in fork"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "968ef63b-413f-45b7-8539-71359340a29c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/pet/:petId",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"pet",
+								":petId"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "petId",
+									"value": "{{id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload Image",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "50d95acf-5ace-4119-acd8-aaebff17c8ec",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "ed4d301e-12e3-48b8-9668-72e8238d7004",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"        pm.response.code = 200;",
+									" });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "feb70cf1-0e3f-434f-831c-00b8f5f9cebf",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "text",
+									"value": "{{imageUrl}}"
+								}
+							]
+						},
+						"url": "{{url}}/pet/{{id}}/uploadImage/"
+					},
+					"response": []
+				},
+				{
+					"name": "Pet",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5c17188a-0ea6-495d-a110-358d6f104a03",
+								"exec": [
+									"let response = pm.response.text().replace(/([^\"\\w-])([-0-9.]{8,100})([^\"\\w-])/g, '$1\\\"$2\\\"$3');",
+									"let jsonData = JSON.parse(response);",
+									"let id = jsonData.id.replace('\"', '');",
+									"console.log(\"id is \" + id);",
+									"pm.collectionVariables.set(\"id\", id);",
+									"//pm.environment.set(\"id\", id);",
+									"",
+									"const getPetRequest = {",
+									"    url: pm.environment.get(\"url\") + '/pet/' + pm.collectionVariables.get(\"id\"),",
+									"    method: 'GET',",
+									"    header: {",
+									"        'Content-Type': 'application/json'",
+									"    },",
+									"};",
+									"",
+									"pm.sendRequest(getPetRequest, function (err, resp) {",
+									"    let jsonData = resp.json();",
+									"    console.log(jsonData.name);",
+									"",
+									"    pm.test(\"Status code is 200\", function () {",
+									"        resp.code = 200;",
+									"    });",
+									"",
+									"    pm.test(\"Validate Pet name\", function () {",
+									"        pm.expect(jsonData.name).to.eql(\"Archi\");",
+									"    });",
+									"",
+									"    console.log(pm.globals.get(\"testVar\"));",
+									"",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "e26c69e4-77c3-4d47-8bb3-e614022c73ea",
+								"exec": [
+									"pm.collectionVariables.set(\"category\", '{{$randomFirstName}}');"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "ff3231ca-b6fe-463a-aa89-444e4096c44b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 0,\n  \"category\": {\n    \"id\": 0,\n    \"name\": \"{{category}}\"\n  },\n  \"name\": \"Archi\",\n  \"photoUrls\": [\n    \"string\"\n  ],\n  \"tags\": [\n    {\n      \"id\": 0,\n      \"name\": \"string\"\n    }\n  ],\n  \"status\": \"available\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url}}/pet"
+					},
+					"response": []
+				},
+				{
+					"name": "Find By Status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b4ba06d0-8e6d-407b-9b2d-9de1867239a0",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"        pm.response.to.have.status(200);",
+									" });",
+									" ",
+									"",
+									" pm.test(\"Status code is 200\", function () {",
+									"",
+									"        pm.response.to.have.status(400);",
+									" });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "11a2acac-f3d0-4782-8aed-a1ecf83b66b4",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/pet/findByStatus?status=available",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"pet",
+								"findByStatus"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "available"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "21d33ad1-3352-4dd3-8813-d31b9908572d"
+		},
+		{
+			"name": "Old Requests",
+			"item": [
+				{
+					"name": "pet",
+					"id": "be74ad76-90b7-47d7-b9ff-ecd79a6b148e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{url}}/pet/74408294"
+					},
+					"response": []
+				},
+				{
+					"name": "Post Pet (2)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "819a0655-b344-4f02-afd4-2811e87078aa",
+								"exec": [
+									"let response = pm.response.text();",
+									"console.log.response;",
+									"let docRegex = new RegExp(/\\d+/, 'i');",
+									"// Matcher will return a group that will be and Order Id for example​",
+									"//let id = response.match(docRegex);​",
+									"let id = response.match(docRegex);",
+									"// Write value to a variable of your choice​",
+									"//console.log(id);​",
+									"console.log(id)",
+									"pm.environment.set(\"id\", id)",
+									"//pm.environment.set(\"id\", id);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "706f7fc8-790c-4af2-b512-9d3ea57178e4",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 0,\n  \"category\": {\n    \"id\": 0,\n    \"name\": \"cat\"\n  },\n  \"name\": \"Archi\",\n  \"photoUrls\": [\n    \"string\"\n  ],\n  \"tags\": [\n    {\n      \"id\": 0,\n      \"name\": \"string\"\n    }\n  ],\n  \"status\": \"available\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://petstore.swagger.io/v2/pet"
+					},
+					"response": []
+				}
+			],
+			"id": "12f0b442-2a82-4642-bb2e-d86a50187db0"
+		}
+	],
+	"variable": [
+		{
+			"key": "category",
+			"value": ""
+		},
+		{
+			"key": "id",
+			"value": ""
+		}
+	]
+}
