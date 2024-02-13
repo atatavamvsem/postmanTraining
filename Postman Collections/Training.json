@@ -491,6 +491,15 @@
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"ids\": [\n    {{emailArray}}\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "https://gmail.googleapis.com/gmail/v1/users/:userId/messages/batchDelete",
 							"protocol": "https",
@@ -510,7 +519,7 @@
 							"variable": [
 								{
 									"key": "userId",
-									"value": ""
+									"value": "{{encodedUserEmai}}"
 								}
 							]
 						}
@@ -560,7 +569,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "18c8217f-4adb-4bb2-b640-375cb6d781d4",
+				"id": "45ae0f58-c0aa-405e-8cca-41b521ce7095",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -570,7 +579,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "2a95246f-3ecd-4b6d-83fb-9fd82791edb7",
+				"id": "ff84e794-cf17-47b1-bb77-10c192a98938",
 				"type": "text/javascript",
 				"exec": [
 					""
