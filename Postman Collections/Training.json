@@ -346,7 +346,42 @@
 		{
 			"name": "Google",
 			"item": [],
-			"id": "e3a30adc-83b1-4567-bec7-1a53a7dc5c18"
+			"id": "e3a30adc-83b1-4567-bec7-1a53a7dc5c18",
+			"auth": {
+				"type": "oauth2",
+				"oauth2": {
+					"scope": "https://mail.google.com/",
+					"clientSecret": "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",
+					"clientId": "685184406453-strlkkhq3pdu8td16qfk69e0e5glbn6a.apps.googleusercontent.com",
+					"accessTokenUrl": "https://accounts.google.com/o/oauth2/token?access_type=offline",
+					"authUrl": "https://accounts.google.com/o/oauth2/auth?access_type=offline",
+					"redirect_uri": "http://localhost:8888/Callback",
+					"tokenName": "Gmail",
+					"addTokenTo": "header"
+				}
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7e9b99b4-39b1-4aaa-9d16-add40eb3bfcd",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "ad5e9e81-8511-46f8-9e25-2aae54ad06bc",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
 		}
 	],
 	"variable": [
