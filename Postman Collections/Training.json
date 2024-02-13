@@ -442,6 +442,45 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Delete email by Id",
+					"id": "19d41c81-2317-43ef-b296-d7a01e4a69ce",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://gmail.googleapis.com/gmail/v1/users/:userId/messages/:id",
+							"protocol": "https",
+							"host": [
+								"gmail",
+								"googleapis",
+								"com"
+							],
+							"path": [
+								"gmail",
+								"v1",
+								"users",
+								":userId",
+								"messages",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "{{encodedUserEmai}}"
+								},
+								{
+									"key": "id",
+									"value": "{{emailId}}"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"id": "e3a30adc-83b1-4567-bec7-1a53a7dc5c18",
