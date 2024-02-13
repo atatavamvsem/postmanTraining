@@ -358,6 +358,18 @@
 								],
 								"type": "text/javascript"
 							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "46e0baa5-baf9-4d29-8a5d-85369d7c478b",
+								"exec": [
+									"var json = pm.response.json()",
+									"",
+									"pm.collectionVariables.set('emailId', json.messages[0].id)"
+								],
+								"type": "text/javascript"
+							}
 						}
 					],
 					"id": "652f852e-121b-44c6-b038-daf136a94cbb",
@@ -389,6 +401,18 @@
 								}
 							]
 						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"id": "3278f2c7-202f-4ad0-9474-a9985b5a18e5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
 					},
 					"response": []
 				}
