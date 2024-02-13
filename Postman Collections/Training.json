@@ -481,6 +481,41 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "New Request",
+					"id": "08aa775f-557a-4757-b2d6-712fe6607dc9",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://gmail.googleapis.com/gmail/v1/users/:userId/messages/batchDelete",
+							"protocol": "https",
+							"host": [
+								"gmail",
+								"googleapis",
+								"com"
+							],
+							"path": [
+								"gmail",
+								"v1",
+								"users",
+								":userId",
+								"messages",
+								"batchDelete"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"id": "e3a30adc-83b1-4567-bec7-1a53a7dc5c18",
