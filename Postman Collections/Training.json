@@ -405,14 +405,41 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Get email by Id",
 					"id": "3278f2c7-202f-4ad0-9474-a9985b5a18e5",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "https://gmail.googleapis.com/gmail/v1/users/:userId/messages/:id",
+							"protocol": "https",
+							"host": [
+								"gmail",
+								"googleapis",
+								"com"
+							],
+							"path": [
+								"gmail",
+								"v1",
+								"users",
+								":userId",
+								"messages",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "{{encodedUserEmai}}"
+								},
+								{
+									"key": "id",
+									"value": "{{emailId}}"
+								}
+							]
+						}
 					},
 					"response": []
 				}
