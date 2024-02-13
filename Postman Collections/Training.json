@@ -345,7 +345,54 @@
 		},
 		{
 			"name": "Google",
-			"item": [],
+			"item": [
+				{
+					"name": "Get Emails",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "e67c592b-1f87-4226-b5c5-f450162fbda3",
+								"exec": [
+									"pm.collectionVariables.set('encodedUserEmai', encodeURIComponent('antonhubko@gmail.com'))"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "652f852e-121b-44c6-b038-daf136a94cbb",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://gmail.googleapis.com/gmail/v1/users/:userId/messages",
+							"protocol": "https",
+							"host": [
+								"gmail",
+								"googleapis",
+								"com"
+							],
+							"path": [
+								"gmail",
+								"v1",
+								"users",
+								":userId",
+								"messages"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "{{encodedUserEmai}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
 			"id": "e3a30adc-83b1-4567-bec7-1a53a7dc5c18",
 			"auth": {
 				"type": "oauth2",
@@ -384,6 +431,28 @@
 			]
 		}
 	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "18c8217f-4adb-4bb2-b640-375cb6d781d4",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "2a95246f-3ecd-4b6d-83fb-9fd82791edb7",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
 	"variable": [
 		{
 			"key": "category",
@@ -392,6 +461,36 @@
 		{
 			"key": "id",
 			"value": ""
+		},
+		{
+			"key": "encodedUserEmai",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "emailId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "emailArray",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "gmailAccessToken",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "gmailRefreshToken",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "gmailBasicAuth",
+			"value": "",
+			"type": "string"
 		}
 	]
 }
