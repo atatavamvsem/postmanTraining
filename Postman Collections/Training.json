@@ -354,7 +354,7 @@
 							"script": {
 								"id": "e67c592b-1f87-4226-b5c5-f450162fbda3",
 								"exec": [
-									"pm.collectionVariables.set('encodedUserEmai', encodeURIComponent('antonhubko@gmail.com'))"
+									"pm.collectionVariables.set('encodedUserEmail', encodeURIComponent('antonhubko@gmail.com'))"
 								],
 								"type": "text/javascript"
 							}
@@ -491,6 +491,10 @@
 			"key": "gmailBasicAuth",
 			"value": "",
 			"type": "string"
+		},
+		{
+			"key": "encodedUserEmail",
+			"value": ""
 		}
 	]
 }
